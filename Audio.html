@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title> </title>
+	<style>
+		.play_time{position:relative;width:200px;height:200px;border:2px solid red;border-radius:50%}
+		.current_point{position:absolute;left:50%;top:50%;margin:-1px 0 0 -1px;width:2px;height:2px;border-radius:50%;border:1px solid blue; background-color:mediumvioletred;transform:rotate(0deg) translateX(100px);transition:transform 1s}
+	</style>
+</head>
+<body>
+<h1>Music Play</h1>
+<ul>
+	<li>
+		<div class="album" id="jacket1">
+			<div class="jacket"></div>
+			<div class="info">
+				<span class="singer">가수</span>
+				<span class="tit">노래제목</span>
+				<div class="music_wrap">
+					<button type="button" class="btn_play_pause">정지</button>
+					<audio id="music0" class="au_audio" preload="auto">
+						<source src="">
+						Your browser does not support the audio tag.
+					</audio>
+				</div>
+				<div class="play_time">
+					<div class="current_point"></div>
+				</div>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="album" id="jacket2">
+			<div class="jacket"></div>
+			<div class="info">
+				<span class="singer">가수</span>
+				<span class="tit">노래제목</span>
+				<div class="music_wrap">
+					<button type="button" class="btn_play_pause">정지</button>
+					<audio id="music1" class="au_audio">
+						<source src="">
+						Your browser does not support the audio tag.
+					</audio>
+				</div>
+				<div class="play_time">
+					<div class="current_point"></div>
+				</div>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="album" id="jacket3">
+			<div class="jacket"></div>
+			<div class="info">
+				<span class="singer">가수</span>
+				<span class="tit">노래제목</span>
+				<div class="music_wrap">
+					<button type="button" class="btn_play_pause">정지</button>
+					<audio id="music2" class="au_audio">
+						<source src="">
+						Your browser does not support the audio tag.
+					</audio>
+				</div>
+				<div class="play_time">
+					<div class="current_point"></div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+
+<script>
+	var addClass = (function(){
+		return function(ele,className){
+			var check = new RegExp("(\\s|^)" + className + "(\\s|$)");
+			if(ele.className.match(check)) return; //중복 체크
+			ele.className += " "+className;
+		}
+	}());
+	var removeClass = (function(){
+		return function(ele,className){
+			var check = new RegExp("(\\s|^)" + className + "(\\s|$)"); //className 체크! className이 hero heke he 일 경우, he클레스제거 ->ro ke 가 되기 때문에
+			ele.className = ele.className.replace(check," ").trim();
+		}
+	}());
+
+	var InputMusicControl = {
+		init : function(obj,musicID,setting){
+			this.setInfo(obj,setting);
+			this.audioPlayPause(obj,musicID);
+		},
+		setInfo: function(obj,setting){
+			this.target = document.querySelector(obj);
+			this.singer = setting.singerName;
+			this.songTitle = setting.songTitle;
+			this.songUrl = setting.songUrl;
+
+			this.target.querySelector('.singer').innerText = this.singer;
+			this.target.querySelector('.tit').innerText = this.songTitle;
+			this.target.querySelector('audio').setAttribute('src',this.songUrl);
+		},
+		audioPlayPause : function(obj,musicID){
+			var playBtn = document.querySelector(obj).querySelector('.btn_play_pause');
+			var myAudio = document.getElementById(musicID);
+			var play_time = document.getElementById('play_time');
+			var current_point = document.querySelector(obj).querySelector('.current_point');
+
+			playBtn.onclick = function(){
+				if (myAudio.paused) {
+					myAudio.play();
+					this.innerText = '재생중';
+					addClass(playBtn,'on');
+				} else {
+					myAudio.pause();
+					this.innerText = '정지';
+					removeClass(playBtn,'on');
+				}
+			};
+
+			myAudio.onplay = function(e){
+				var audios = document.getElementsByTagName('audio');
+				var audiosBtns = document.getElementsByTagName('button');
+				for(var i = 0, len = audios.length; i < len;i++){
+					if(audios[i] != e.target){
+						audios[i].pause();
+						audios[i].currentTime = 0;
+						audiosBtns[i].innerText = '정지';
+						removeClass(audiosBtns[i],'on');
+					}
+				}
+			};
+
+			myAudio.onended = function() {
+				playBtn.innerText = '정지';
+				removeClass(playBtn,'on');
+			};
+
+			myAudio.ontimeupdate = function(){
+				//play_time.innerHTML = Math.floor(myAudio.currentTime)+'/'+ Math.floor(myAudio.duration);
+				var percentage =Math.floor(myAudio.currentTime)/Math.floor(myAudio.duration);
+				current_point.style.transform = 'rotate('+Math.floor(360*percentage)+'deg) translateX(100px)';
+			};
+		}
+	};
+
+	var cd1 = InputMusicControl.init('#jacket1','music0',{
+		singerName : '첸 백현 시우민',
+		songTitle : '너를 위해',
+		songUrl : 'http://hbs.au.xdn.kinxcdn.com/music_live/1min/cj_new_1min/k5147.tbm.mp3'
+	});
+	var cd2 = InputMusicControl.init('#jacket2','music1',{
+		singerName : '에일리',
+		songTitle : 'If you',
+		songUrl : 'http://hbs.au.xdn.kinxcdn.com/music_live/1min/loen_new_1min/k5146.tbm.mp3'
+	});
+	var cd3 = InputMusicControl.init('#jacket3','music2',{
+		singerName : '여자친구',
+		songTitle : '너 그리고 나',
+		songUrl : 'http://hbs.au.xdn.kinxcdn.com/music_live/1min/loen_new_1min/k5081.tbm.mp3'
+	});
+</script>
+</body>
+</html>
