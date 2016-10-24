@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+fieldset,img {border:0 none}
+dl,ul,ol,menu,li {list-style:none}
+blockquote, q {quotes:none}
+blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}
+input,select,textarea,button {font-size:100%;vertical-align:top;}
+button {border:0 none;background-color:transparent;cursor:pointer}
+table {border-collapse:collapse;border-spacing:0}
+body {-webkit-text-size-adjust:none} /* 뷰표트 변환시 폰트크기 자동확대 방지 */
+input[type='text'],input[type='password'],input[type='submit'],input[type='search'] {-webkit-appearance:none; border-radius:0}
+input:checked[type='checkbox'] {background-color:#666; -webkit-appearance:checkbox}
+button,input[type='button'],input[type='submit'],input[type='reset'],input[type='file'] {-webkit-appearance:button; border-radius:0}
+input[type='search']::-webkit-search-cancel-button {-webkit-appearance:none}
+
+body {background:rgba(3,3,3,0.8)}
+body,th,td,input,select,textarea,button {font-size:12px;line-height:1;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;color:#333}
+
+a {color:#333;text-decoration:none}
+a:active, a:hover {text-decoration:none}
+address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
+*, *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+
+*{padding:0;margin:0}
+
+.car_wrap{height:178px;width:100%; border-bottom:4px solid brown;}
+.car{position:relative;width:300px;height:150px;transition: all}
+.car .body{width:300px;height:150px;border-radius:5px;background-color:#FCED3F}
+.car .wheel{position:absolute;bottom:-30px;transform-origin:30px 30px;}
+.car .wheel1{right:30px;}
+.car .wheel2{left:30px;}
+.car .window1{position:absolute;left:50%;top:10px;width:160px;height:80px;margin-left:-80px;border-radius:20%;background-color:#7DEBFF}
+.car .light{position:absolute;right:-10px;bottom:20px;width:25px;height:30px;border-radius:5px;background-color:#FF9022}
+.car .wheel{
+  transition: all;
+  animation:bingle linear 0s infinite;
+  animation-play-state:running;
+}
+@keyframes bingle{
+    100%{transform:rotate(360deg);}
+}
+
+.info{padding:15px;}
+.info li{color:#ededed;}
