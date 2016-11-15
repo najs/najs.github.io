@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html amp lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>지도</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<style>
+		html, body { height: 100%; margin: 0; padding: 0; }
+		#map { height: 100%; }
+	</style>
+
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript">
+	var map;
+	function initMap() {
+		var myLatLng = {lat: 37.566660, lng: 126.977991};
+
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: myLatLng,
+			zoom: 18
+		});
+
+		/*var markerImg = "https://cdn.pixabay.com/photo/2014/04/02/10/45/location-304467_960_720.png"*/
+
+		var marker = new google.maps.Marker({ //마커 설정
+			map : map,
+			position : myLatLng, //마커 위치
+			title: '시청'
+			/*icon:{
+				path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+				scale: 30
+			}*/
+		});
+	}
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-U91WfIHrSuWlEw68klZHS7LdepSAtU&callback=initMap">
+</script>
+</body>
+</html>
