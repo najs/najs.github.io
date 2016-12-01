@@ -25,7 +25,7 @@ address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 *{padding:0;margin:0}
 
 .car_wrap{height:178px;width:100%; border-bottom:4px solid brown;}
-.car{position:relative;width:300px;height:150px;transition: all}
+.car{position:relative;width:300px;height:150px;transition:all;-webkit-transition:all;}
 .car .body{width:300px;height:150px;border-radius:5px;background-color:#FCED3F}
 .car .wheel{position:absolute;bottom:-30px;transform-origin:30px 30px;}
 .car .wheel1{right:30px;}
@@ -34,11 +34,15 @@ address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 .car .light{position:absolute;right:-10px;bottom:20px;width:25px;height:30px;border-radius:5px;background-color:#FF9022}
 .car .wheel{
   transition: all;
+  -webkit-transition:all;
   animation:bingle linear 0s infinite;
   animation-play-state:running;
 }
 @keyframes bingle{
-    100%{transform:rotate(360deg);}
+    100%{-ms-transform: rotate(360deg); /* IE 9 */
+    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+    transform: rotate(360deg);
+    transform:rotate(360deg);}
 }
 
 .info{padding:15px;}
