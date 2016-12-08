@@ -2,22 +2,20 @@
  * Created by njs2000 on 2016-12-02.
  */
 var jsSlide = (function(){
-	function jsSlide(options){
-		var _this = this;
-		this.target = $(options.wrapBox);
-		this.nowIdx = 0;
-		this.prevIdx = 0;
-		this.slide_list = $(this.target.find(options.listName || '.slide_list'));
+	function jsSlide(wrapBox,options){
+		this.target = $(wrapBox);
+		this.slide_list = $(this.target.find(options.listName || '.jsSlide-list'));
 		this.slide_listLength = this.slide_list.children().length;
-
-		this.paging = $(this.target.find(options.pagingClass || '.paging'));
+		this.paging = $(this.target.find(options.pagingClass || '.jsSlide-paging'));
 		this.pagingNum = this.paging.find('a');
-		this.btnNext = this.target.find('.next');
-		this.btnPrev = this.target.find('.prev');
+		this.btnNext = this.target.find('.jsSlide-btn-next');
+		this.btnPrev = this.target.find('.jsSlide-btn-prev');
 		this.effect = options.effect || 'showHide'; //showHide, fadeShowHide, slidingShowHide
 		this.effectSpeed = options.effectSpeed || 0;
 		this.auto = options.auto || false;
 		this.autoDuration = options.autoDuration || 2000; //1000 이상
+		this.nowIdx = 0;
+		this.prevIdx = 0;
 		this.Inter;
 		this.isPlay = false;
 
