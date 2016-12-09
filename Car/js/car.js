@@ -134,7 +134,7 @@ var carMove = (function(){
 
 // --------------------------------------------------------------- //
 var car2 = new Car('유치원붕붕이',new Engine, new Wheel());
-console.log(car2);
+
 
 
 

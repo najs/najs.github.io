@@ -3,6 +3,7 @@
  */
 var jsSlide = (function(){
 	function jsSlide(wrapBox,options){
+
 		this.target = $(wrapBox);
 		this.slide_list = $(this.target.find(options.listName || '.jsSlide-list'));
 		this.slide_listLength = this.slide_list.children().length;
@@ -23,8 +24,15 @@ var jsSlide = (function(){
 	};
 
 	jsSlide.prototype.init = function(){
-		this.slide_list.children('li').eq(this.nowIdx).css({'display':'block','opacity':1});// 처음꺼 보이기
+		var _this = this;
+		this.slide_list.children('.jsSlide').eq(this.nowIdx).css({'display':'block','opacity':1});// 처음꺼 보이기
 		this.pagingNum.eq(this.nowIdx).addClass('on');// 처음꺼 넘버링 표시
+
+
+		if(this.effect === 'fadeShowHide') {
+		 	this.slide_list.children('.jsSlide').css('opacity',0);
+			this.slide_list.children('.jsSlide').eq(this.nowIdx).css('opacity',1);
+		}
 
 		this.autoControl();
 		this.clickEv();
@@ -35,12 +43,14 @@ var jsSlide = (function(){
 		this.btnNext.on('click',function(){
 			_this.next();
 			setTimeout(_this.autoControl(),_this.autoDuration);
+			console.log(_this.isPlay);
 			return false;
 		});
 
 		this.btnPrev.on('click',function(){
 			_this.prev();
 			setTimeout(_this.autoControl(),_this.autoDuration);
+			console.log(_this.isPlay);
 			return false;
 		});
 
@@ -48,6 +58,7 @@ var jsSlide = (function(){
 			aNum = $(this).index();
 			_this.curr(aNum);
 			setTimeout(_this.autoControl(),_this.autoDuration);
+			console.log(_this.isPlay);
 			return false;
 		});
 	};
@@ -96,8 +107,8 @@ var jsSlide = (function(){
 	jsSlide.prototype.showHide = function(pre, now){
 		if(this.isPlay) return;
 		this.isPlay = true;
-		this.slide_list.children('li').eq(pre).css({'display':'none','opacity':0});
-		this.slide_list.children('li').eq(now).css({'display':'block','opacity':1});
+		this.slide_list.children('.jsSlide').eq(pre).css({'display':'none','opacity':0});
+		this.slide_list.children('.jsSlide').eq(now).css({'display':'block','opacity':1});
 		this.pagingOnOff(pre,now);
 		this.prevIdx = this.nowIdx;
 		this.isPlay = false;
@@ -107,10 +118,11 @@ var jsSlide = (function(){
 		var _this = this;
 		if(_this.isPlay) return;
 		_this.isPlay = true;
-		this.slide_list.children('li').eq(pre).stop().animate({'opacity':0},_this.effectSpeed,function(){
+
+		this.slide_list.children('.jsSlide').eq(pre).stop().animate({'opacity':0},_this.effectSpeed,function(){
 			$(this).css({'display':'none'});
 		});
-		this.slide_list.children('li').eq(now).show().stop().animate({'opacity':1},_this.effectSpeed);
+		this.slide_list.children('.jsSlide').eq(now).show().stop().animate({'opacity':1},_this.effectSpeed);
 		this.pagingOnOff(pre,now);
 		this.prevIdx = this.nowIdx;
 		_this.isPlay = false;
@@ -123,12 +135,12 @@ var jsSlide = (function(){
 		if(pre !== this.nowIdx){
 			k = pre <= now ? '100%' : '-100%';
 			r = pre <= now ? '-100%' : '100%';
-			this.slide_list.children('li').eq(pre).stop().animate({'opacity':0,'left':r},_this.effectSpeed,function(){
+			this.slide_list.children('.jsSlide').eq(pre).stop().animate({'opacity':0,'left':r},_this.effectSpeed,function(){
 				$(this).stop().animate({'display':'none'},_this.effectSpeed,function(){
 					_this.isPlay = false;
 				});
 			});
-			this.slide_list.children('li').eq(now).css({'display':'block','opacity':'1'}).stop().animate({'left':k},0,function(){
+			this.slide_list.children('.jsSlide').eq(now).css({'display':'block','opacity':'1'}).stop().animate({'left':k},0,function(){
 				$(this).animate({'left':'0'},_this.effectSpeed, function(){
 					_this.isPlay = false;
 				});
