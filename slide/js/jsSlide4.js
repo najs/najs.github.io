@@ -1,3 +1,4 @@
+
 /**
  * Created by njs2000 on 2016-12-02.
  */
@@ -30,7 +31,7 @@ var jsSlide = (function(){
 
 
 		if(this.effect === 'fadeShowHide') {
-		 	this.slide_list.children('.jsSlide').css('opacity',0);
+			this.slide_list.children('.jsSlide').css('opacity',0);
 			this.slide_list.children('.jsSlide').eq(this.nowIdx).css('opacity',1);
 		}
 
@@ -40,21 +41,23 @@ var jsSlide = (function(){
 
 	jsSlide.prototype.clickEv = function(){
 		var _this = this;
-		this.btnNext.on('click',function(){
-			_this.next();
+		this.btnNext.on('click',function(e){
+			e.preventDefault();
+			_this.next(_this.nowIdx);
+			setTimeout(_this.autoControl(),_this.autoDuration);
+			console.log(_this.isPlay);
+		});
+
+		this.btnPrev.on('click',function(e){
+			e.preventDefault();
+			_this.prev(_this.nowIdx);
 			setTimeout(_this.autoControl(),_this.autoDuration);
 			console.log(_this.isPlay);
 			return false;
 		});
 
-		this.btnPrev.on('click',function(){
-			_this.prev();
-			setTimeout(_this.autoControl(),_this.autoDuration);
-			console.log(_this.isPlay);
-			return false;
-		});
-
-		this.pagingNum.on('click',function(){
+		this.pagingNum.on('click',function(e){
+			e.preventDefault();
 			aNum = $(this).index();
 			_this.curr(aNum);
 			setTimeout(_this.autoControl(),_this.autoDuration);
@@ -63,23 +66,29 @@ var jsSlide = (function(){
 		});
 	};
 
-	jsSlide.prototype.prev = function(){
+	jsSlide.prototype.prev = function(k){
 		var _this = this;
+		this.nowIdx = k;
 		if(_this.isPlay) return;
 		_this.isPlay = true;
 		this.nowIdx = this.nowIdx <=0 ? 0 : this.nowIdx-1;
+		console.log(this.nowIdx)
 		_this.isPlay = false;
 		this.choiceShowHide();
+
 	};
 
-	jsSlide.prototype.next = function(){
+	jsSlide.prototype.next = function(k){
 		var _this = this;
+		this.nowIdx = k;
 		if(_this.isPlay) return;
 		_this.isPlay = true;
-
 		this.nowIdx = this.nowIdx  >= this.slide_listLength-1 ? this.slide_listLength-1 : this.nowIdx+1;
+		console.log(this.nowIdx);
 		_this.isPlay = false;
+
 		this.choiceShowHide();
+		return _this.nowIdx;
 	};
 
 	jsSlide.prototype.curr = function(n){

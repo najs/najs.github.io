@@ -29,7 +29,7 @@ button{border:0;cursor:pointer}
 </head>
 <body>
 <div id="wrap">
-	aa
+	aa : showHide
 	<div class="jsSlide-wrap" id="slide_wrap">
 		<div class="jsSlide-inner">
 			<ul class="jsSlide-list">
@@ -55,7 +55,7 @@ button{border:0;cursor:pointer}
 			<button type="button" class="jsSlide-btn-next">다음</button>
 		</div>
 	</div>
-	bb
+	bb : fadeShowHide
 	<div class="jsSlide-wrap" id="slide_wrap2">
 		<div class="jsSlide-inner">
 			<ul class="jsSlide-list">
@@ -81,7 +81,7 @@ button{border:0;cursor:pointer}
 			<button type="button" class="jsSlide-btn-next">다음</button>
 		</div>
 	</div>
-	cc
+	cc : showHide
 	<div class="jsSlide-wrap" id="slide_wrap3">
 		<div class="jsSlide-inner">
 			<ul class="jsSlide-list">
@@ -107,7 +107,7 @@ button{border:0;cursor:pointer}
 			<button type="button" class="jsSlide-btn-next">다음</button>
 		</div>
 	</div>
-	ee
+	ee : fadeShowHide
 	<div class="jsSlide-wrap" id="slide_wrap5">
 		<div class="jsSlide-inner">
 			<ul class="jsSlide-list">
@@ -133,7 +133,7 @@ button{border:0;cursor:pointer}
 			<button type="button" class="jsSlide-btn-next">다음</button>
 		</div>
 	</div>
-	ff
+	ff : slidingShowHide
 	<div class="jsSlide-wrap" id="slide_wrap6">
 		<div class="jsSlide-inner">
 			<ul class="jsSlide-list">
@@ -145,6 +145,15 @@ button{border:0;cursor:pointer}
 				<li	class="jsSlide"><a href="#"	style="background:navy url(img/poket5.jpg) no-repeat 50% 50%"><span>다섯!</span></a></li>
 				<li class="jsSlide"><a href="#" style="background:purple url(img/poket0.gif) no-repeat 50% 50%"><span>여섯!</span></a></li>
 			</ul>
+			<div class="jsSlide-paging">
+				<a href="" class="on">0</a>
+				<a href="">1</a>
+				<a href="">2</a>
+				<a href="">3</a>
+				<a href="">4</a>
+				<a href="">5</a>
+				<a href="">6</a>
+			</div>
 			<div class="jsSlide-numbering"></div>
 			<button type="button" class="jsSlide-btn-prev">이전</button>
 			<button type="button" class="jsSlide-btn-next">다음</button>
@@ -188,9 +197,10 @@ var ee = new jsSlide("#slide_wrap5",{
 var ff = new jsSlide("#slide_wrap6",{
 	listName :'.jsSlide-list',
 	pagingClass:'.jsSlide-paging',
-	effect :'showHide',
+	effect :'slidingShowHide',
 	auto : true,
-	autoDuration : 4000
+	autoDuration : 4000,
+	effectSpeed : 1000,
 });
 
 </script>

@@ -14,12 +14,14 @@ var jsSlide = (function(){
 		this.pagingNum = this.paging.find('a');
 		this.btnNext = this.target.find('.next');
 		this.btnPrev = this.target.find('.prev');
+		this.btnStop = this.target.find('.stop');
 		this.effect = options.effect || 'showHide'; //showHide, fadeShowHide, slidingShowHide
 		this.effectSpeed = options.effectSpeed || 0;
 		this.auto = options.auto || false;
 		this.autoDuration = options.autoDuration || 2000; //1000 이상
 		this.Inter;
 		this.isPlay = false;
+		this.isAutoPlaying = false;
 
 		this.init();
 	};
@@ -36,22 +38,27 @@ var jsSlide = (function(){
 		var _this = this;
 		this.btnNext.on('click',function(){
 			_this.next();
-			setTimeout(_this.autoControl(),_this.autoDuration);
 			return false;
 		});
 
 		this.btnPrev.on('click',function(){
 			_this.prev();
-			setTimeout(_this.autoControl(),_this.autoDuration);
 			return false;
 		});
 
 		this.pagingNum.on('click',function(){
 			aNum = $(this).index();
 			_this.curr(aNum);
-			setTimeout(_this.autoControl(),_this.autoDuration);
 			return false;
 		});
+
+		this.btnStop.on('click',function(){
+			setTimeout(_this.autoControl(),_this.autoDuration);
+			console.log(_this.isAutoPlaying);
+			return false;
+		})
+
+
 	};
 
 	jsSlide.prototype.prev = function(){
@@ -150,9 +157,7 @@ var jsSlide = (function(){
 		var _this = this;
 		if(this.auto){
 			clearInterval(_this.Inter);
-
 			_this.Inter = setInterval(autoFnc,_this.effectSpeed+_this.autoDuration);
-
 			function autoFnc(){
 				if(_this.isPlay) return;
 				_this.nowIdx++;
@@ -162,7 +167,22 @@ var jsSlide = (function(){
 				_this.prevIdx = _this.nowIdx;
 				_this.isPlay = false;
 			}
+
+			if(this.isAutoPlaying){
+				clearInterval(_this.Inter);
+				this.btnStop.text('play!');
+				this.isAutoPlaying = false;
+			}else{
+				this.isAutoPlaying = true;
+				this.btnStop.text('stop!');
+				clearInterval(_this.Inter);
+				_this.Inter = setInterval(autoFnc,_this.effectSpeed+_this.autoDuration);
+			}
+
 		}
 	};
+
+
+
 	return jsSlide;
 }());
