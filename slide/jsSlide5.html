@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<style type="text/css">
+*{padding:0;margin:0;}
+li{list-style:none}
+button{border:0;cursor:pointer}
+
+#wrap{margin:0 auto;}
+.jsSlide-wrap{position:relative;width:100%;height:300px;min-width:500px;margin:0 auto;}
+.jsSlide-inner{position:absolute;top:0;left:0;width:100%;height:100%}
+.jsSlide-inner .jsSlide-list{overflow:hidden;position:relative;left:50%;top:0;width:100%;height:100%;margin-left:-50%;}
+.jsSlide-inner .jsSlide-list .jsSlide{display:none;position:absolute;left:0;top:0;right:0;bottom:0;text-align:center}
+.jsSlide-inner .jsSlide-list .jsSlide a{display:block;width:100%;height:100%;color:#1295b1; text-decoration:none;}
+.jsSlide-inner button{position:absolute;top:50%;margin-top:-36px;width:35px;height:72px;color:#ffffff}
+.jsSlide-inner .jsSlide-btn-prev{left:0;background-color:#564a73}
+.jsSlide-inner .jsSlide-btn-next{right:0;background-color:#564a73}
+
+.jsSlide-inner .jsSlide-btn-stop{right:30px;top:auto;bottom:0; margin-top:0; background-color:darkslategray;}
+
+
+.jsSlide-paging{position:absolute;left:0;right:0;bottom:0;width:100%;text-align:center;}
+.jsSlide-paging a{display:inline-block;width:10%;height:50px;background-color:#000000;border-radius:0;line-height:20px; text-decoration:none;color:#ffffff;}
+.jsSlide-paging a:hover,
+.jsSlide-paging a.on{background-color:#e9967a;}
+
+.jsSlide-paging.white a{background:#ffffff;color:#000000}
+.jsSlide-paging.white a.on{background-color:#000000;color:#ffffff;}
+</style>
+<title> 슬라이드 만들기 </title>
+</head>
+<body>
+<div id="wrap">
+	aa : fade
+	<div class="jsSlide-wrap" id="slide_wrap">
+		<div class="jsSlide-inner">
+			<ul class="jsSlide-list">
+				<li class="jsSlide"><a href="#" style="background:antiquewhite url(img/poket6.jpg) no-repeat 50% 50%"><span>영!</span></a></li>
+				<li class="jsSlide"><a href="#" style="background:orange url(img/poket1.png) no-repeat 50% 50%"><span>하나!</span></a></li>
+				<li class="jsSlide"><a href="#" style="background:yellow url(img/poket2.png) no-repeat 50% 50%"><span>둘!</span></a></li>
+				<li	class="jsSlide"><a href="#"	style="background:green url(img/poket3.png) no-repeat 50% 50%"><span>셋!	</span></a></li>
+				<li class="jsSlide"><a href="#"	style="background:blue url(img/poket4.png) no-repeat 50% 50%"><span>넷!</span></a></li>
+				<li	class="jsSlide"><a href="#"	style="background:navy url(img/poket5.jpg) no-repeat 50% 50%"><span>다섯!</span></a></li>
+				<li class="jsSlide"><a href="#" style="background:purple url(img/poket0.gif) no-repeat 50% 50%"><span>여섯!</span></a></li>
+			</ul>
+			<div class="jsSlide-paging">
+				<a href="#">0</a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<a href="#">6</a>
+			</div>
+			<div class="jsSlide-numbering"></div>
+			<button type="button" class="jsSlide-btn-prev">이전</button>
+			<button type="button" class="jsSlide-btn-next">다음</button>
+		</div>
+	</div>
+
+
+	<div class="jsSlide-wrap" id="slide_wrap2">
+		<div class="jsSlide-inner">
+			<ul class="jsSlide-list">
+				<li class="jsSlide"><a href="#" style="background:antiquewhite url(img/poket6.jpg) no-repeat 50% 50%"><span>영!</span></a></li>
+				<li class="jsSlide"><a href="#" style="background:orange url(img/poket1.png) no-repeat 50% 50%"><span>하나!</span></a></li>
+				<li class="jsSlide"><a href="#" style="background:yellow url(img/poket2.png) no-repeat 50% 50%"><span>둘!</span></a></li>
+				<li	class="jsSlide"><a href="#"	style="background:green url(img/poket3.png) no-repeat 50% 50%"><span>셋!	</span></a></li>
+				<li class="jsSlide"><a href="#"	style="background:blue url(img/poket4.png) no-repeat 50% 50%"><span>넷!</span></a></li>
+				<li	class="jsSlide"><a href="#"	style="background:navy url(img/poket5.jpg) no-repeat 50% 50%"><span>다섯!</span></a></li>
+			</ul>
+			<div class="jsSlide-paging">
+				<a href="#">0</a>
+				<a href="#">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+			</div>
+			<div class="jsSlide-numbering"></div>
+			<div class="btn_wrap">
+				<button type="button" class="jsSlide-btn-prev">이전</button>
+				<button type="button" class="jsSlide-btn-next">다음</button>
+				<button type="button" class="jsSlide-btn-stop">멈춤/재생</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script src="js/jq-1.10.2.js"></script>
+<script src="js/jsSlide5.js"></script>
+<script type="text/javascript">
+var aa = new jsSlide("#slide_wrap",{
+	effectMode :'normal',
+	pageingStyle:'white',
+	firstIdx : 6,
+	loooop : true,
+});
+
+var bb= new jsSlide("#slide_wrap2",{
+	effectMode :'fade',
+	pageingStyle : 'dark',
+	firstIdx : 3,
+	loooop : true,
+	auto : true
+});
+</script>
+</body>
+</html>
