@@ -41,33 +41,7 @@ var jsSlide = (function(){
 			btnNextEle : container.find(this.defaults.btnNextClass),
 			btnPrevEle : container.find(this.defaults.btnPrevClass),
 			btnStopEle: container.find(this.defaults.btnStopClass)
-
-
 		};
-
-
-
-
-			//$(this.defaults.slideWrap).find(this.defaults.pageClass).addClass(this.defaults.paging.style);
-
-
-
-		/*var initVar = function(){
-			this.target = $(wrapBox);
-			this.slide_list = $(this.target.find(options.listName || '.jsSlide-list'));
-			this.slide_listLength = this.slide_list.children().length;
-			this.paging = $(this.target.find(options.pagingClass || '.jsSlide-paging'));
-			this.pagingNum = this.paging.find('a');
-			this.btnNext = this.target.find('.jsSlide-btn-next');
-			this.btnPrev = this.target.find('.jsSlide-btn-prev');
-			this.effect = options.effect || 'showHide'; //showHide, fadeShowHide, slidingShowHide
-			this.effectSpeed = options.effectSpeed || 0;
-			this.auto = options.auto || false;
-			this.autoDuration = options.autoDuration || 2000; //1000 이상
-			this.nowIdx = 0;
-			this.prevIdx = 0;
-			this.isPlay = false;
-		};*/
 
 		this.init();
 		this.clickHandle();
@@ -90,7 +64,8 @@ var jsSlide = (function(){
 			$this.autoPlay();
 		});
 
-		this.set.pageEle.on('click',function(){
+		this.set.pageEle.on('click',function(e){
+			e.preventDefault();
 			var selfIdx = $(this).index();
 			$this.reset(selfIdx);
 			$this.autoStop();
@@ -105,7 +80,6 @@ var jsSlide = (function(){
 
 
 	jsSlide.prototype.init = function(){
-		console.log(this.defaults.presentIdx)
 		this.set.pageWrapEle.addClass(this.defaults.paging.style);
 		this.set.pageEle.eq(this.defaults.presentIdx).addClass('on');
 		this.set.slideEle.eq(this.defaults.presentIdx).css({'display':'block'});
@@ -120,10 +94,10 @@ var jsSlide = (function(){
 		}else{
 			this.defaults.presentIdx = this.defaults.presentIdx <= 0 ? this.set.slideEleLength-1 : this.defaults.presentIdx-1;
 		}
-		this.slideChange(this.defaults.effectMode);
+		this.slideChange('prev',this.defaults.effectMode);
 		this.pagingChange();
 
-		console.log('presentIdx :'+this.defaults.presentIdx ,'pastIdx :'+this.defaults.pastIdx);
+		/*console.log('presentIdx :'+this.defaults.presentIdx ,'pastIdx :'+this.defaults.pastIdx);*/
 	};
 
 	jsSlide.prototype.next = function(){
@@ -134,41 +108,104 @@ var jsSlide = (function(){
 			this.defaults.presentIdx = this.defaults.presentIdx >= this.set.slideEleLength-1 ? 0 : this.defaults.presentIdx = this.defaults.presentIdx >= this.set.slideEleLength-1 ? this.defaults.presentIdx :  this.defaults.presentIdx+1;
 		}
 
-		this.slideChange(this.defaults.effectMode);
+		this.slideChange('next',this.defaults.effectMode);
 		this.pagingChange();
 
-		console.log('presentIdx :'+this.defaults.presentIdx ,'pastIdx :'+this.defaults.pastIdx);
+/*		console.log('presentIdx :'+this.defaults.presentIdx ,'pastIdx :'+this.defaults.pastIdx);*/
 	};
 
 	jsSlide.prototype.reset = function(k){
 		this.defaults.pastIdx = this.defaults.presentIdx;
 		this.defaults.presentIdx = k;
 
-		this.slideChange(this.defaults.effectMode);
+		this.slideChange('combination',this.defaults.effectMode);
 		this.pagingChange();
 
-		console.log('presentIdx :'+this.defaults.presentIdx, 'pastIdx :'+this.defaults.pastIdx);
+		/*console.log('presentIdx :'+this.defaults.presentIdx, 'pastIdx :'+this.defaults.pastIdx);*/
 	};
 
-	jsSlide.prototype.slideChange = function(mode){
+	jsSlide.prototype.slideChange = function(dir,mode){
 		var $this = this;
+
 		var actions = {
-			normal : function(){
+			normal:function(){
 				$this.set.slideEle.eq($this.defaults.pastIdx).css({'display':'none'});
 				$this.set.slideEle.eq($this.defaults.presentIdx).css({'display':'block'});
 			},
-			fade : function(){
-				$this.set.slideEle.eq($this.defaults.pastIdx).stop(true,true).fadeOut(1000);
-				$this.set.slideEle.eq($this.defaults.presentIdx).stop(true,true).fadeIn(1000);
+			fade:function(){
+				$this.set.slideEle.eq($this.defaults.pastIdx).stop(true, true).fadeOut($this.defaults.effectSpeed);
+				$this.set.slideEle.eq($this.defaults.presentIdx).stop(true, true).fadeIn($this.defaults.effectSpeed);
 			},
-			sliding : function(){
-
+			sliding:{
+				next : function(){
+					$this.set.slideEle.eq($this.defaults.pastIdx)
+						.css({'display':'block', 'left':'0'})
+						.stop(true, true).animate({'left':'-100%'}, $this.defaults.effectSpeed, function(){
+						$(this).css({'display':'none'});
+					});
+					$this.set.slideEle.eq($this.defaults.presentIdx)
+						.css({'display':'block', 'left':'100%'})
+						.stop(true, true).animate({'left':0}, $this.defaults.effectSpeed);
+				},
+				prev : function(){
+					$this.set.slideEle.eq($this.defaults.pastIdx)
+						.css({'display':'block', 'left':'0'})
+						.stop(true, true).animate({'left':'100%'}, $this.defaults.effectSpeed, function(){
+						$(this).css({'display':'none'});
+					});
+					$this.set.slideEle.eq($this.defaults.presentIdx)
+						.css({'display':'block', 'left':'-100%'})
+						.stop(true, true).animate({'left':0}, $this.defaults.effectSpeed);
+				}
 			}
-		}
+		};
+
+
+		var run = {
+			next : {
+				normal : function(){
+					actions.normal();
+				},
+				fade : function(){
+					actions.fade();
+				},
+				sliding : function(){
+					actions.sliding.next();
+
+				}
+
+			},
+			prev : {
+				normal : function(){
+					actions.normal();
+				},
+				fade : function(){
+					actions.fade();
+				},
+				sliding : function(){
+					actions.sliding.prev();
+
+				}
+			},
+			combination : {
+				normal : function(){
+					actions.normal();
+				},
+				fade : function(){
+					actions.fade();
+				},
+				sliding : function(){
+					if($this.defaults.pastIdx > $this.defaults.presentIdx){
+						actions.sliding.prev();
+					} else{
+						actions.sliding.next();
+					}
+				}
+			}
+		};
 
 		if(this.defaults.pastIdx === this.defaults.presentIdx) return;
-		actions[mode]();
-
+		run[dir][mode]();
 	};
 
 	jsSlide.prototype.pagingChange = function(){
