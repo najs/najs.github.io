@@ -85,8 +85,11 @@ var jsSlide = (function(){
 		}else{
 			this.defaults.presentIdx = this.defaults.presentIdx <= 0 ? this.set.slideEleLength-1 : this.defaults.presentIdx-1;
 		}
-		this.slideChange('prev',this.defaults.effectMode);
+
 		this.pagingChange();
+		this.slideChange('prev',this.defaults.effectMode);
+
+
 		// console.log('presentIdx :'+this.defaults.presentIdx ,'pastIdx :'+this.defaults.pastIdx);
 	};
 
