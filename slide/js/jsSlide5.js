@@ -16,7 +16,6 @@ var jsSlide = (function(){
 			btnNextClass : options.btnNext || '.jsSlide-btn-next',
 			btnPrevClass : options.btnPrev || '.jsSlide-btn-prev',
 			btnStopClass : options.btnStop || '.jsSlide-btn-stop',
-
 			slideListClass : options.slideListClass ||'.jsSlide-list',
 			autoDuration : options.autoDuration || 1000,
 			effectMode : options.effectMode || 'normal', //'sliding','fade'
@@ -26,17 +25,21 @@ var jsSlide = (function(){
 			loop : options.loooop || false,
 			timer : {},
 			timerSpeed : options.timerSpeed || 3000,
-			isPlay : true
+			isPlay : true,
+			isIngBar : options.ingBar || true,
+			ingBar : '.ingBar'
 		};
 
 		this.set = {
 			slideEleLength : Container.find(this.defaults.slideClass).length,
 			slideEle : Container.find(this.defaults.slideClass),
+			slideListEle : Container.find(this.defaults.slideListClass),
 			pageWrapEle : Container.find(this.defaults.pageClass),
 			pageEle : Container.find(this.defaults.pageClass).find('a'),
 			btnNextEle : Container.find(this.defaults.btnNextClass),
 			btnPrevEle : Container.find(this.defaults.btnPrevClass),
-			btnStopEle: Container.find(this.defaults.btnStopClass)
+			btnStopEle: Container.find(this.defaults.btnStopClass),
+			barEle : Container.find(this.defaults.ingBar)
 		};
 
 		this.init();
@@ -48,6 +51,7 @@ var jsSlide = (function(){
 		this.set.slideEle.eq(this.defaults.presentIdx).css({'display':'block'});
 		this.autoPlay();
 		this.clickHandle();
+		this.ingBar();
 	};
 
 	jsSlide.prototype.clickHandle = function(){
@@ -57,6 +61,7 @@ var jsSlide = (function(){
 			if(!$this.defaults.isPlay) return;
 			$this.next();
 			$this.autoPlay();
+			$this.ingBar();
 		});
 
 		this.set.btnPrevEle.on('click',function(){
@@ -224,7 +229,8 @@ var jsSlide = (function(){
 			clearInterval(this.timer);
 			this.timer = setInterval(function(){
 				$this.next();
-			},this.defaults.timerSpeed);
+				$this.ingBar();
+			},$this.defaults.autoDuration+$this.defaults.effectSpeed);
 		}
 	};
 
@@ -242,6 +248,15 @@ var jsSlide = (function(){
 			this.autoPlay();
 		}
 		// console.log(this.defaults.auto)
+	};
+
+	jsSlide.prototype.ingBar = function(){
+		var $this = this;
+		if(this.defaults.auto && this.defaults.loop){
+			this.set.barEle.stop(true, true).animate({'width':'100%'}, $this.defaults.autoDuration+$this.defaults.effectSpeed, function(){
+				$this.set.barEle.css('width', 0)
+			});
+		}
 	};
 
 	return jsSlide;
