@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+	<style>
+		*{padding:0;margin:0}
+	</style>
+</head>
+<body>
+
+<canvas id="myCanvas"></canvas>
+
+<script>
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+
+canvas.width = 500;
+canvas.height = 500;
+
+var frameIdx = 0, tickCnt = 0, ticksPerFrame = 5, numberOfFrame = 30;
+
+var update = function(){
+	tickCnt++;
+	if (tickCnt > ticksPerFrame){
+		tickCnt = 0;
+		if(frameIdx < numberOfFrame-1){
+			//다음으로
+			frameIdx++;
+		}else{
+			frameIdx = 0;
+		}
+	}
+};
+
+var drawImg = function(canvas,canvasContext, imgSrc){
+	var img = new Image();
+	img.src=imgSrc;
+	img.onload = function(){
+		canvasContext.drawImage(img,0,0, 170, 300);
+	};
+};
+
+var clearDraw = function(canvas, canvasContext, y){
+	canvasContext.clearRect(0,y*10, 170, 300);// canvas.width, canvas.height
+};
+
+var renderer = function(){
+	clearDraw(canvas,ctx,frameIdx);
+	drawImg(canvas,ctx,"kakao_yei.png");
+};
+
+var renderLoop = function(){
+	window.requestAnimationFrame(renderLoop);
+	update();
+	renderer();
+};
+
+window.onload = function(){  //이미지 로드 후 실행
+	renderLoop()
+};
+
+</script>
+</body>
+</html>
