@@ -3,83 +3,73 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-	<title>vwvh-calc</title>
-
+	<title>vwvh-Calc</title>
 	<style>
 		*{padding:0;margin:0}
-		.box{border:2px solid #000000}
+		.box{padding:20px;border:2px solid #000000}
+		#wrap{max-width:640px; margin:0 auto;}
 	</style>
 </head>
 <body>
-<form>
-	<div class="box">
-		<label><strong>Viewport width base</strong>
-			<br>...in px/pixels
-		</label>
-		<input id="viewport-v" value="1440" type="text" placeholder="Insert base">
-	</div>
+<div id="wrap">
+	<h1>vw Calculator</h1>
+	<form>
+		<div class="box">
+			<label><strong>Viewport width base</strong>
+				<br>...in px/pixels
+			</label>
+			<input id="viewport-v" value="1440" type="text" placeholder="Insert base">
+		</div>
 
-	<div class="box">
-		<label>
-			<strong>Font-size base</strong>
-			<br>...in px/pixels
-		</label>
-		<input id="fontsize-v" value="20" type="text" placeholder="Insert font size in pixels">
-	</div>
+		<div class="box">
+			<label>
+				<strong>Font-size base</strong>
+				<br>...in px/pixels
+			</label>
+			<input id="fontsize-v" value="20" type="text" placeholder="Insert font size in pixels">
+		</div>
 
-	<div class="box">
-		<div id="result-v">= <span class="vw">1.39vw</span></div>
-	</div>
+		<div class="box">
+			<div id="result-v">= <span class="vw">1.39vw</span></div>
+		</div>
+	</form>
 
-</form>
-
-<!-- Result -->
-<div id="result" class="box">
-	<div id="result-inner">
-		<em>Input</em>
-		Based on a <span class="vv">1440px</span> wide viewport base AND a <span class="fv">20px</span> static font-size base.<br><br>
-		<em>Output</em>
-		Results in a responsive font-size value of:<br><strong><span class="vw">1.39vw</span></strong>.
+	<!-- Result -->
+	<div id="result" class="box">
+		<div id="result-inner">
+			<em>Input</em>
+			Based on a <span class="vv">1440px</span> wide viewport base AND a <span class="fv">20px</span> static font-size base.<br><br>
+			<em>Output</em>
+			Results in a responsive font-size value of:<br><strong><span class="vw">1.39vw</span></strong>.
+		</div>
 	</div>
 </div>
 
-<script	src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+<script	src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
-	$(document).ready(function() {
-		function o(o, t) {
+	$(document).ready(function(){
+
+		function roundingNumber(o, t){
 			return Number(Math.round(o + "e" + t) + "e-" + t)
 		}
 
-		/*var i = $("#viewport-v").val(),
-				a = $("#fontsize-v").val(),
-				r = 1.39,
-				d = 2 * r,
-				l = 1.5 * r,
-				s = l;*/
+		function vwCalc(){
+			var viewportV = $("#viewport-v").val(),
+					fontsizeV = $("#fontsize-v").val(),
+					r = fontsizeV / viewportV * 100,
+					resultV = roundingNumber(r, 2);
 
-		function n() {
-			var i = $("#viewport-v").val(),
-			a = $("#fontsize-v").val(),
-			r = a / i * 100,
-			r = o(r, 2),
-			d = 2 * r,
-			l = 1.5 * r,
-			s = l;
-
-			$(".vv").html(i + "px");
-			$(".vv-num").html(i + "");
-			$(".fv").html(a + "px");
-			$(".vw").html(r + "vw");
+			$(".vv").html(viewportV + "px");
+			$(".vv-num").html(viewportV + "");
+			$(".fv").html(fontsizeV + "px");
+			$(".vw").html(resultV + "vw");
 		}
 
-		$("#fontsize-v, #viewport-v").change(function(o) {
-			o.preventDefault();
-			n();
+		$("#fontsize-v, #viewport-v").change(function(e) {
+			e.preventDefault();
+			vwCalc();
 		});
-
 	});
 </script>
-
-
 </body>
 </html>
