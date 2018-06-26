@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-	<title>vwvh-Calc</title>
+	<title>vw-Calc</title>
 	<style>
 		*{padding:0;margin:0}
 		li{list-style:none}
 		button{border:none}
 		input[type="text"]{margin-left:5px;font-size:24px;vertical-align:bottom;text-align:center}
 		#wrap{max-width:640px; margin:0 auto;}
-		.box{padding:20px;border:2px solid #000000}
+		.box{padding:20px;border:2px solid #000000;line-height:2}
 		.vw{font-size:20px}
 		#vwConvertResult{display:inline-block;margin-top:5px;}
 		#resultCopy{display:inline-block;margin-left:3px;padding:5px;background-color:#87ceeb;}
@@ -39,7 +39,7 @@
 	<div id="result" class="box">
 		<div id="result-inner">
 			<em>Input</em>
-			Based on a <span class="vv">1440px</span> wide viewport base AND a <span class="fv">20px</span> static font-size base.<br><br>
+			Based on a <span class="vv">1440px</span> wide viewport base AND a <span class="fv">20px</span> static font-size base.<br>
 			<em>Output</em>
 			Results in a responsive font-size value of:<br><strong><span class="vw" id="vwConvertResult">1.39</span></strong>vw.
 			<button type="button" id="resultCopy">Copy to clipboard</button>
