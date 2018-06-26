@@ -8,8 +8,10 @@
 		*{padding:0;margin:0}
 		li{list-style:none}
 		button{border:none}
-		.box{padding:20px;border:2px solid #000000}
+		input[type="text"]{margin-left:5px;font-size:24px;vertical-align:bottom;text-align:center}
 		#wrap{max-width:640px; margin:0 auto;}
+		.box{padding:20px;border:2px solid #000000}
+		.vw{font-size:20px}
 		#vwConvertResult{display:inline-block;margin-top:5px;}
 		#resultCopy{display:inline-block;margin-left:3px;padding:5px;background-color:#87ceeb;}
 	</style>
@@ -19,22 +21,17 @@
 	<h1>vw Calculator</h1>
 	<form>
 		<div class="box">
-			<label><strong>Viewport width base</strong>
-				<br>...in px/pixels
-			</label>
+			<label><strong>Viewport width base</strong>...in px/pixels</label>
 			<input id="viewport-v" value="1440" type="text" placeholder="Insert base">
 		</div>
 		
 		<div class="box">
-			<label>
-				<strong>Font-size base</strong>
-				<br>...in px/pixels
-			</label>
+			<label><strong>Font-size base</strong>...in px/pixels</label>
 			<input id="fontsize-v" value="20" type="text" placeholder="Insert font size in pixels">
 		</div>
 		
 		<div class="box">
-			<div id="result-v">= <span class="vw">1.39</span>vw</div>
+			<div id="result-v"> = <span class="vw">1.39</span>vw</div>
 		</div>
 	</form>
 	
