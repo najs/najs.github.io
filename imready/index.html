@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="description" content=""/>
+	<meta name="keywords" content=""/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, target-densitydpi=medium-dpi">
+	<title>imready.js</title>
+	<style>
+		html,
+		body {position: relative;height: 100%;margin: 0;font-family: sans-serif;}
+		a {text-decoration: none;}
+		.page {position: relative;width: 100%;height: 100%;padding: 20px;box-sizing: border-box;}
+		#home {min-height: 800px;}
+		#home .container {position: absolute;}
+		.container {position: relative;top: 0;left: 0;text-align: center;padding: 10px;box-sizing: border-box;max-width: 800px;}
+		.background {position: absolute;top: 0;left: 0;width: 100%;height: 100%;filter: blur(5px);overflow: hidden;}
+		.background:before {content: "";position: absolute;left: 0;top: 0;width: 100%;height: 100%;background-color: rgba(255, 255, 255, 0.3);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);}
+		.background .wrapper {position: relative;width: 100%;height: 100%;min-width: 500px;min-height: 500px;display: flex;flex-wrap: wrap;}
+		.background img {position: relative;width: 20%;height: 20%;border: 0;appearance: none;opacity: 0;}
+		.progress {font-weight: bold;}
+		.container{position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);font-size:36px;}
+	</style>
+</head>
+<body>
+<div class="background">
+	<div class="wrapper">
+		<img src="assets/1.jpg" alt="">
+		<img src="assets/2.jpg" alt="">
+		<img src="assets/3.jpg" alt="">
+		<img src="assets/4.jpg" alt="">
+		<img src="assets/5.jpg" alt="">
+		<img src="assets/6.jpg" alt="">
+		<img src="assets/7.jpg" alt="">
+		<img src="assets/8.jpg" alt="">
+		<img src="assets/9.jpg" alt="">
+		<img src="assets/10.jpg" alt="">
+		<img src="assets/11.jpg" alt="">
+		<img src="assets/12.jpg" alt="">
+		<img src="assets/13.jpg" alt="">
+		<img src="assets/14.jpg" alt="">
+		<img src="assets/15.jpg" alt="">
+		<img src="assets/16.jpg" alt="">
+		<img src="assets/17.jpg" alt="">
+		<img src="assets/18.jpg" alt="">
+		<img src="assets/19.jpg" alt="">
+		<img src="assets/20.jpg" alt="">
+		<img src="assets/21.jpg" alt="">
+		<img src="assets/22.jpg" alt="">
+		<img src="assets/23.jpg" alt="">
+		<img src="assets/24.jpg" alt="">
+		<img src="assets/25.jpg" alt="">
+	</div>
+</div>
+<div class="container">
+	<h1>Are you Ready?</h1>
+	<p class="progress">0%</p>
+</div>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2Ces6%2Ces5%2CArray.prototype.forEach%2CArray.prototype.map%2CArray.prototype.reduce"></script>
+<script src="js/imready.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
